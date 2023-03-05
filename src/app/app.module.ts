@@ -6,7 +6,6 @@ import { filter } from 'rxjs/operators';
 
 import { AppComponent } from './app.component';
 import { routes } from './app.routes';
-import { HomePageComponent } from './core/components/home-page/home-page.component';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 
@@ -15,7 +14,6 @@ const STATE_KEY = makeStateKey<any>('apollo.state');
 @NgModule({
     declarations: [
         AppComponent,
-        HomePageComponent,
     ],
     imports: [
         BrowserModule.withServerTransition({appId: 'serverApp'}),

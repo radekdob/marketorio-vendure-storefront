@@ -1,21 +1,23 @@
-import { Route } from '@angular/router';
-
-import { ProductDetailComponent } from './core/components/product-detail/product-detail.component';
-import { ProductListComponent } from './core/components/product-list/product-list.component';
+import {Route} from '@angular/router';
 
 export const routes: Route[] = [
     {
-        path: 'category/:slug',
-        component: ProductListComponent,
+        path: '',
         pathMatch: 'full',
+        loadComponent: () => import('./home-page/home-page.component').then((m) => m.HomePageComponent)
+    },
+    {
+        path: 'category/:slug',
+        pathMatch: 'full',
+        loadComponent: () => import('./product-list/product-list.component').then((m) => m.ProductListComponent)
     },
     {
         path: 'search',
-        component: ProductListComponent,
+        loadComponent: () => import('./product-list/product-list.component').then((m) => m.ProductListComponent)
     },
     {
         path: 'product/:slug',
-        component: ProductDetailComponent,
+        loadComponent: () => import('./product-detail/product-detail.component').then((m) => m.ProductDetailComponent)
     },
     {
         path: 'account',

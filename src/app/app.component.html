@@ -34,10 +34,11 @@
     <vsf-collections-menu-mobile [visible]="mobileNavVisible$ | async" class="z-10"></vsf-collections-menu-mobile>
     <vsf-cart-drawer [visible]="cartDrawerVisible$ | async" (close)="closeCartDrawer()"></vsf-cart-drawer>
     <div class="contents">
-        <vsf-home-page *ngIf="isHomePage$ | async; else main"></vsf-home-page>
-        <ng-template #main>
-            <router-outlet></router-outlet>
-        </ng-template>
+        <!--  <vsf-home-page *ngIf="isHomePage$ | async; else main"></vsf-home-page>
+          <ng-template #main>
+              <router-outlet></router-outlet>
+          </ng-template>-->
+        <router-outlet></router-outlet>
     </div>
 
     <vsf-layout-footer>

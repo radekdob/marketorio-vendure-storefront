@@ -1,21 +1,22 @@
-import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { filter, map, switchMap, withLatestFrom } from 'rxjs/operators';
+import {NgClass, NgForOf, NgIf} from '@angular/common';
+import {Component, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {Subscription} from 'rxjs';
+import {filter, map, switchMap, withLatestFrom} from 'rxjs/operators';
 
-import {
-    AddToCartMutation,
-    AddToCartMutationVariables,
-    GetProductDetailQuery,
-    GetProductDetailQueryVariables
-} from '../../../common/generated-types';
-import { notNullOrUndefined } from '../../../common/utils/not-null-or-undefined';
-import { DataService } from '../../providers/data/data.service';
-import { NotificationService } from '../../providers/notification/notification.service';
-import { StateService } from '../../providers/state/state.service';
+import {AddToCartMutation, AddToCartMutationVariables, GetProductDetailQuery, GetProductDetailQueryVariables} from '../common/generated-types';
+import {notNullOrUndefined} from '../common/utils/not-null-or-undefined';
+import {AssetGalleryComponent} from '../core/components/asset-gallery/asset-gallery.component';
+import {CollectionBreadcrumbsComponent} from '../core/components/collection-breadcrumbs/collection-breadcrumbs.component';
+import {ActiveService} from '../core/providers/active/active.service';
+import {DataService} from '../core/providers/data/data.service';
+import {NotificationService} from '../core/providers/notification/notification.service';
+import {StateService} from '../core/providers/state/state.service';
+import {FormatPricePipe} from '../shared/pipes/format-price.pipe';
 
-import { ADD_TO_CART, GET_PRODUCT_DETAIL } from './product-detail.graphql';
-import { ActiveService } from '../../providers/active/active.service';
+import {ADD_TO_CART, GET_PRODUCT_DETAIL} from './product-detail.graphql';
 
 type Variant = NonNullable<GetProductDetailQuery['product']>['variants'][number];
 type Collection = NonNullable<GetProductDetailQuery['product']>['collections'][number];
@@ -24,6 +25,17 @@ type Collection = NonNullable<GetProductDetailQuery['product']>['collections'][n
     selector: 'vsf-product-detail',
     templateUrl: './product-detail.component.html',
     styleUrls: ['./product-detail.component.scss'],
+    standalone: true,
+    imports: [
+        FormsModule,
+        NgClass,
+        FontAwesomeModule,
+        CollectionBreadcrumbsComponent,
+        AssetGalleryComponent,
+        FormatPricePipe,
+        NgIf,
+        NgForOf
+    ]
 })
 export class ProductDetailComponent implements OnInit, OnDestroy {
 

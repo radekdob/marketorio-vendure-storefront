@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges } from '@angular/core';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
+import {RouterLink} from '@angular/router';
 
 import { GetCollectionQuery } from '../../../common/generated-types';
 import { AssetPreviewPipe } from '../../pipes/asset-preview.pipe';
@@ -9,6 +10,11 @@ import { AssetPreviewPipe } from '../../pipes/asset-preview.pipe';
     templateUrl: './collection-card.component.html',
     // styleUrls: ['./collection-card.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        AssetPreviewPipe,
+        RouterLink
+    ]
 })
 export class CollectionCardComponent implements OnChanges {
     @Input() collection: NonNullable<GetCollectionQuery['collection']>;

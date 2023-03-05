@@ -1,6 +1,8 @@
+import {AsyncPipe, NgForOf, NgIf} from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import { BehaviorSubject, combineLatest, merge, Observable, of } from 'rxjs';
 import { distinctUntilChanged, map, mapTo, scan, share, shareReplay, skip, switchMap, take, tap, } from 'rxjs/operators';
 
@@ -9,11 +11,15 @@ import {
     GetCollectionQueryVariables,
     SearchProductsQuery,
     SearchProductsQueryVariables
-} from '../../../common/generated-types';
-import { getRouteArrayParam } from '../../../common/utils/get-route-array-param';
-import { AssetPreviewPipe } from '../../../shared/pipes/asset-preview.pipe';
-import { DataService } from '../../providers/data/data.service';
-import { StateService } from '../../providers/state/state.service';
+} from '../common/generated-types';
+import { getRouteArrayParam } from '../common/utils/get-route-array-param';
+import {CollectionBreadcrumbsComponent} from '../core/components/collection-breadcrumbs/collection-breadcrumbs.component';
+import {ProductCardComponent} from '../core/components/product-card/product-card.component';
+import {ProductListControlsComponent} from '../core/components/product-list-controls/product-list-controls.component';
+import {CollectionCardComponent} from '../shared/components/collection-card/collection-card.component';
+import { AssetPreviewPipe } from '../shared/pipes/asset-preview.pipe';
+import { DataService } from '../core/providers/data/data.service';
+import { StateService } from '../core/providers/state/state.service';
 
 import { GET_COLLECTION, SEARCH_PRODUCTS } from './product-list.graphql';
 
@@ -22,6 +28,17 @@ type SearchItem = SearchProductsQuery['search']['items'][number];
 @Component({
     selector: 'vsf-product-list',
     templateUrl: './product-list.component.html',
+    standalone: true,
+    imports: [
+        CollectionBreadcrumbsComponent,
+        NgIf,
+        AsyncPipe,
+        CollectionCardComponent,
+        NgForOf,
+        ProductListControlsComponent,
+        ProductCardComponent,
+        FontAwesomeModule
+    ]
 // styleUrls: ['./product-list.component.scss'],
     })
 export class ProductListComponent implements OnInit {

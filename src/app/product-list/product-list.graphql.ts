@@ -1,7 +1,7 @@
 import {gql} from 'apollo-angular';
 
 
-import { ASSET_FRAGMENT } from '../../../common/graphql/fragments.graphql';
+import { ASSET_FRAGMENT } from '../common/graphql/fragments.graphql';
 
 export const SEARCH_PRODUCTS = gql`
     query SearchProducts($input: SearchInput!) {

@@ -1,10 +1,11 @@
-import { AfterViewInit, Component, ElementRef, Inject, Input, OnChanges, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
+import {isPlatformBrowser, NgForOf, NgIf} from '@angular/common';
+import {AfterViewInit, Component, ElementRef, Inject, Input, OnChanges, OnInit, PLATFORM_ID, ViewChild} from '@angular/core';
 import PhotoSwipeLightbox from 'photoswipe/lightbox';
 
-import { AssetFragment } from '../../../common/generated-types';
+import {AssetFragment} from '../../../common/generated-types';
+import {AssetPreviewPipe} from '../../../shared/pipes/asset-preview.pipe';
 
 import './types.d';
-import { isPlatformBrowser } from '@angular/common';
 
 export type AssetWithDimensions = Pick<AssetFragment, 'id' | 'preview' | 'width' | 'height'>;
 
@@ -12,6 +13,12 @@ export type AssetWithDimensions = Pick<AssetFragment, 'id' | 'preview' | 'width'
     selector: 'vsf-asset-gallery',
     templateUrl: './asset-gallery.component.html',
     styleUrls: ['./asset-gallery.component.scss'],
+    imports: [
+        AssetPreviewPipe,
+        NgIf,
+        NgForOf
+    ],
+    standalone: true
 })
 export class AssetGalleryComponent implements OnInit, OnChanges, AfterViewInit {
     @Input() assets?: AssetWithDimensions[] = [];

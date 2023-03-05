@@ -19,6 +19,7 @@ let channelDataPromise: Promise<any>;
 @Pipe({
     name: 'formatPrice',
     pure: false,
+    standalone: true
 })
 export class FormatPricePipe implements PipeTransform {
 

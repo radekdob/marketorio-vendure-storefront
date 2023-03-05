@@ -1,18 +1,26 @@
+import {AsyncPipe, NgForOf} from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeStyle, SafeUrl } from '@angular/platform-browser';
 import { gql } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 
-import { environment } from '../../../../environments/environment';
-import { GetCollectionsQuery } from '../../../common/generated-types';
-import { DataService } from '../../providers/data/data.service';
+import { environment } from '../../environments/environment';
+import { GetCollectionsQuery } from '../common/generated-types';
+import {CollectionCardComponent} from '../shared/components/collection-card/collection-card.component';
+import { DataService } from '../core/providers/data/data.service';
 
 @Component({
     selector: 'vsf-home-page',
     templateUrl: './home-page.component.html',
     styleUrls: ['./home-page.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        CollectionCardComponent,
+        NgForOf,
+        AsyncPipe
+    ]
 })
 export class HomePageComponent implements OnInit {
 

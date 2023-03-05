@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import {NgClass, NgForOf, TitleCasePipe} from '@angular/common';
+import {ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
-import { SearchProductsQuery } from '../../../common/generated-types';
-import { getRouteArrayParam } from '../../../common/utils/get-route-array-param';
+import {SearchProductsQuery} from '../../../common/generated-types';
 
 export interface FacetWithValues {
     id: string;
@@ -19,6 +20,13 @@ export interface FacetWithValues {
     templateUrl: './product-list-controls.component.html',
     // styleUrls: ['./product-list-controls.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        FontAwesomeModule,
+        NgClass,
+        NgForOf,
+        TitleCasePipe
+    ]
 })
 export class ProductListControlsComponent implements OnChanges {
     @Input() activeFacetValueIds: string[] = [];
