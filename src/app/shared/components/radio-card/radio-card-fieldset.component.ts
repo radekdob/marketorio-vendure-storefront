@@ -2,7 +2,6 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
-    ContentChild,
     EventEmitter,
     Input,
     OnChanges,
@@ -10,15 +9,19 @@ import {
     OnInit,
     Output,
     SimpleChanges,
-    TemplateRef,
 } from '@angular/core';
-import { Subject, Subscription } from 'rxjs';
-import { debounceTime, throttleTime } from 'rxjs/operators';
+import {Subject, Subscription} from 'rxjs';
+import {throttleTime} from 'rxjs/operators';
 
 @Component({
     selector: 'vsf-radio-card-fieldset',
-    template: `<fieldset><ng-content></ng-content></fieldset> `,
+    template: `
+        <fieldset>
+            <ng-content></ng-content>
+        </fieldset> `,
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: []
 })
 export class RadioCardFieldsetComponent<T = any> implements OnInit, OnChanges, OnDestroy {
     @Input() selectedItemId: string;
@@ -29,7 +32,8 @@ export class RadioCardFieldsetComponent<T = any> implements OnInit, OnChanges, O
     private idChange$ = new Subject<T>();
     private subscription: Subscription;
 
-    constructor(private changeDetector: ChangeDetectorRef) {}
+    constructor(private changeDetector: ChangeDetectorRef) {
+    }
 
     ngOnInit() {
         this.subscription = this.idChange$

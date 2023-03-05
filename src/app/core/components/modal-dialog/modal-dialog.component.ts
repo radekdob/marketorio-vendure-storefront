@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, Inject, TemplateRef, Type } from '@angular/core';
 import { Subject } from 'rxjs';
+import {SharedModule} from '../../../shared/shared.module';
 
 import { Dialog, DIALOG_COMPONENT, MODAL_OPTIONS, ModalOptions } from '../../providers/modal/modal-types';
 
@@ -13,6 +14,10 @@ import { DialogButtonsDirective } from './dialog-buttons.directive';
     selector: 'vsf-modal-dialog',
     templateUrl: './modal-dialog.component.html',
     // styleUrls: ['./modal-dialog.component.scss'],
+    standalone: true,
+    imports: [
+        SharedModule
+    ]
 })
 export class ModalDialogComponent<T extends Dialog<any>> {
     closeModal: (result?: any) => void;

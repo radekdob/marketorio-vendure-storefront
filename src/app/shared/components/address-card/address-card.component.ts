@@ -1,13 +1,17 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import {NgIf} from '@angular/common';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 
-import { AddressFragment, OrderAddressFragment } from '../../../common/generated-types';
-import { DataService } from '../../../core/providers/data/data.service';
+import {AddressFragment, OrderAddressFragment} from '../../../common/generated-types';
 
 @Component({
     selector: 'vsf-address-card',
     templateUrl: './address-card.component.html',
     // styleUrls: ['./address-card.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        NgIf
+    ]
 })
 export class AddressCardComponent {
     @Input() address: OrderAddressFragment | AddressFragment;

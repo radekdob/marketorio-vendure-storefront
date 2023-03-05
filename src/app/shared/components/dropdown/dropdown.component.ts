@@ -38,6 +38,8 @@ export type DropdownPosition = 'top' | 'right' | 'bottom' | 'left' | 'top-left' 
     templateUrl: './dropdown.component.html',
     // styleUrls: ['./dropdown.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: []
 })
 export class DropdownComponent {
     /** If true, the dropdown will close when the user clicks anywhere on the document */

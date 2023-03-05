@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import {AddressCardComponent} from '../shared/components/address-card/address-card.component';
 
 import { SharedModule } from '../shared/shared.module';
 
@@ -43,6 +44,7 @@ const DECLARATIONS = [
     imports: [
         SharedModule,
         RouterModule.forChild(routes),
+        AddressCardComponent,
     ],
     providers: [
         AccountGuard,

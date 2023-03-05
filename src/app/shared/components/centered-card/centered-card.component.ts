@@ -1,3 +1,4 @@
+import {NgIf} from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 @Component({
@@ -5,6 +6,10 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
     templateUrl: './centered-card.component.html',
     styleUrls: ['./centered-card.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        NgIf
+    ]
 })
 export class CenteredCardComponent {
     @Input() title: string;

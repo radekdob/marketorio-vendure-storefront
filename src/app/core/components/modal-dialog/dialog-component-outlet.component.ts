@@ -15,6 +15,8 @@ import {
 @Component({
     selector: 'vsf-dialog-component-outlet',
     template: ``,
+    standalone: true,
+    imports: []
 })
 export class DialogComponentOutletComponent implements OnInit {
     @Input() component: Type<any>;

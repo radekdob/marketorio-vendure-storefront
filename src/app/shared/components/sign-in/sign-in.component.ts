@@ -1,5 +1,7 @@
+import {NgIf} from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import {FormsModule} from '@angular/forms';
+import {Router, RouterLink} from '@angular/router';
 
 import { SignInMutation, SignInMutationVariables } from '../../../common/generated-types';
 import { DataService } from '../../../core/providers/data/data.service';
@@ -12,6 +14,12 @@ import { SIGN_IN } from './sign-in.graphql';
     templateUrl: './sign-in.component.html',
     styleUrls: ['./sign-in.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        FormsModule,
+        RouterLink,
+        NgIf
+    ]
 })
 export class SignInComponent {
     @Input() navigateToOnSuccess: any[] | undefined;

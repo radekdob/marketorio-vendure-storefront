@@ -1,12 +1,26 @@
+import {NgForOf, NgIf} from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import {RouterLink} from '@angular/router';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
 import { CartFragment, GetActiveOrderQuery } from '../../../common/generated-types';
+import {AssetPreviewPipe} from '../../pipes/asset-preview.pipe';
+import {FormatPricePipe} from '../../pipes/format-price.pipe';
 
 @Component({
     selector: 'vsf-cart-contents',
     templateUrl: './cart-contents.component.html',
     // styleUrls: ['./cart-contents.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        AssetPreviewPipe,
+        RouterLink,
+        NgIf,
+        NgForOf,
+        FormatPricePipe,
+        FontAwesomeModule
+    ]
 })
 export class CartContentsComponent {
     @Input() cart: GetActiveOrderQuery['activeOrder'];

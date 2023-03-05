@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import {RadioCardFieldsetComponent} from '../shared/components/radio-card/radio-card-fieldset.component';
+import {RadioCardComponent} from '../shared/components/radio-card/radio-card.component';
 
 import { SharedModule } from '../shared/shared.module';
 
@@ -25,6 +27,8 @@ const DECLARATIONS = [
     imports: [
         SharedModule,
         RouterModule.forChild(routes),
+        RadioCardFieldsetComponent,
+        RadioCardComponent,
     ],
 })
 export class CheckoutModule {
