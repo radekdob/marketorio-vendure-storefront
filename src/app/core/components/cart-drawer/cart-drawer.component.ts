@@ -1,25 +1,41 @@
-import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { merge, Observable } from 'rxjs';
-import { map, shareReplay, switchMap, take } from 'rxjs/operators';
+import {AsyncPipe, NgClass, NgIf} from '@angular/common';
+import {ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {RouterLink} from '@angular/router';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {merge, Observable} from 'rxjs';
+import {map, shareReplay, switchMap, take} from 'rxjs/operators';
 
 import {
-    AdjustItemQuantityMutation, AdjustItemQuantityMutationVariables,
+    AdjustItemQuantityMutation,
+    AdjustItemQuantityMutationVariables,
     GetActiveOrderQuery,
-    GetActiveOrderQueryVariables,
-    RemoveItemFromCartMutation, RemoveItemFromCartMutationVariables
+    RemoveItemFromCartMutation,
+    RemoveItemFromCartMutationVariables
 } from '../../../common/generated-types';
-import { DataService } from '../../providers/data/data.service';
-import { NotificationService } from '../../providers/notification/notification.service';
-import { StateService } from '../../providers/state/state.service';
+import {CartContentsComponent} from '../../../shared/components/cart-contents/cart-contents.component';
+import {FormatPricePipe} from '../../../shared/pipes/format-price.pipe';
+import {ActiveService} from '../../providers/active/active.service';
+import {DataService} from '../../providers/data/data.service';
+import {NotificationService} from '../../providers/notification/notification.service';
+import {StateService} from '../../providers/state/state.service';
 
-import { ADJUST_ITEM_QUANTITY, REMOVE_ITEM_FROM_CART } from './cart-drawer.graphql';
-import { ActiveService } from '../../providers/active/active.service';
+import {ADJUST_ITEM_QUANTITY, REMOVE_ITEM_FROM_CART} from './cart-drawer.graphql';
 
 @Component({
     selector: 'vsf-cart-drawer',
     templateUrl: './cart-drawer.component.html',
     styleUrls: ['./cart-drawer.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        NgClass,
+        AsyncPipe,
+        FontAwesomeModule,
+        CartContentsComponent,
+        FormatPricePipe,
+        RouterLink,
+        NgIf
+    ]
 })
 export class CartDrawerComponent implements OnInit {
     @Input() visible = false;
@@ -32,7 +48,8 @@ export class CartDrawerComponent implements OnInit {
     constructor(private dataService: DataService,
                 private stateService: StateService,
                 private activeService: ActiveService,
-                private notificationService: NotificationService) {}
+                private notificationService: NotificationService) {
+    }
 
     ngOnInit() {
         this.cart$ = merge(
@@ -67,7 +84,7 @@ export class CartDrawerComponent implements OnInit {
             qty,
         }).pipe(
             take(1),
-        ).subscribe(({ adjustOrderLine }) => {
+        ).subscribe(({adjustOrderLine}) => {
             switch (adjustOrderLine.__typename) {
                 case 'Order':
                     break;

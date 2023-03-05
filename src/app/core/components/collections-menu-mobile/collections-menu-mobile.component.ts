@@ -1,5 +1,7 @@
+import {AsyncPipe, NgClass, NgForOf, NgIf} from '@angular/common';
 import { ChangeDetectionStrategy, Component, HostBinding, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -16,6 +18,15 @@ type CollectionItem = GetCollectionsQuery['collections']['items'][number];
     templateUrl: './collections-menu-mobile.component.html',
     styleUrls: ['./collections-menu-mobile.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        NgClass,
+        RouterLink,
+        FontAwesomeModule,
+        AsyncPipe,
+        NgForOf,
+        NgIf
+    ]
 })
 export class CollectionsMenuMobileComponent implements OnInit {
     @HostBinding('class.visible')

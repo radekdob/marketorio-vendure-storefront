@@ -1,4 +1,4 @@
-import { isPlatformBrowser } from '@angular/common';
+import {isPlatformBrowser} from '@angular/common';
 import {
     AfterViewInit,
     ChangeDetectionStrategy,
@@ -10,14 +10,19 @@ import {
     PLATFORM_ID,
     ViewChild,
 } from '@angular/core';
-import { fromEvent, Subscription } from 'rxjs';
-import { bufferTime, filter, map } from 'rxjs/operators';
+import {fromEvent, Subscription} from 'rxjs';
+import {bufferTime, filter, map} from 'rxjs/operators';
 
 @Component({
     selector: 'vsf-layout-header',
-    template: `<div class="floating-container" #floatingContainer><ng-content></ng-content></div>`,
+    template: `
+        <div class="floating-container" #floatingContainer>
+            <ng-content></ng-content>
+        </div>`,
     styleUrls: ['./layout-header.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: []
 })
 export class LayoutHeaderComponent implements AfterViewInit, OnDestroy {
 
@@ -27,12 +32,13 @@ export class LayoutHeaderComponent implements AfterViewInit, OnDestroy {
     @HostBinding('style.height.px')
     headerHeight: number | null;
 
-    @ViewChild('floatingContainer', { static: true })
+    @ViewChild('floatingContainer', {static: true})
     private floatingContainer: ElementRef<HTMLDivElement>;
 
     private subscription: Subscription;
 
-    constructor(@Inject(PLATFORM_ID) private platformId: any) {}
+    constructor(@Inject(PLATFORM_ID) private platformId: any) {
+    }
 
     ngAfterViewInit() {
         if (isPlatformBrowser(this.platformId)) {
@@ -47,7 +53,7 @@ export class LayoutHeaderComponent implements AfterViewInit, OnDestroy {
     }
 
     private setUpScrollHandler(_window: Window) {
-        this.subscription = fromEvent(_window, 'scroll', { passive: true }).pipe(
+        this.subscription = fromEvent(_window, 'scroll', {passive: true}).pipe(
             map(() => _window.scrollY),
             bufferTime(250),
             filter(val => 1 < val.length),

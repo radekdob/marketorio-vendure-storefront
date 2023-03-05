@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, of, Subject } from 'rxjs';
-import { map, mergeMap, switchMap, takeUntil, tap } from 'rxjs/operators';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Observable, of, Subject} from 'rxjs';
+import {map, mergeMap, switchMap, takeUntil, tap} from 'rxjs/operators';
 
 import {
     AddressFragment,
@@ -19,14 +19,14 @@ import {
     SetShippingMethodMutationVariables,
     TransitionToArrangingPaymentMutation
 } from '../../../common/generated-types';
-import { GET_AVAILABLE_COUNTRIES, GET_CUSTOMER_ADDRESSES } from '../../../common/graphql/documents.graphql';
-import { notNullOrUndefined } from '../../../common/utils/not-null-or-undefined';
-import { DataService } from '../../../core/providers/data/data.service';
-import { ModalService } from '../../../core/providers/modal/modal.service';
-import { NotificationService } from '../../../core/providers/notification/notification.service';
-import { StateService } from '../../../core/providers/state/state.service';
-import { AddressFormComponent } from '../../../shared/components/address-form/address-form.component';
-import { AddressModalComponent } from '../../../shared/components/address-modal/address-modal.component';
+import {GET_AVAILABLE_COUNTRIES, GET_CUSTOMER_ADDRESSES} from '../../../common/graphql/documents.graphql';
+import {notNullOrUndefined} from '../../../common/utils/not-null-or-undefined';
+import {DataService} from '../../../core/providers/data/data.service';
+import {ModalService} from '../../../core/providers/modal/modal.service';
+import {NotificationService} from '../../../core/providers/notification/notification.service';
+import {StateService} from '../../../core/providers/state/state.service';
+import {AddressFormComponent} from '../../../shared/components/address-form/address-form.component';
+import {AddressModalComponent} from '../../../shared/components/address-modal/address-modal.component';
 
 import {
     GET_ELIGIBLE_SHIPPING_METHODS,

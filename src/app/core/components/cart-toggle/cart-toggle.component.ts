@@ -1,4 +1,6 @@
+import {AsyncPipe, NgIf} from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import { from, interval, merge, Observable, timer, zip } from 'rxjs';
 import { delay, distinctUntilChanged, map, refCount, share, shareReplay, switchMap } from 'rxjs/operators';
 
@@ -12,6 +14,12 @@ import { GET_CART_TOTALS } from './cart-toggle.graphql';
     selector: 'vsf-cart-toggle',
     templateUrl: './cart-toggle.component.html',
     styleUrls: ['./cart-toggle.component.scss'],
+    standalone: true,
+    imports: [
+        FontAwesomeModule,
+        AsyncPipe,
+        NgIf
+    ]
 })
 export class CartToggleComponent implements OnInit {
     @Output() toggle = new EventEmitter<void>();

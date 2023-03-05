@@ -1,4 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {NgClass, NgForOf} from '@angular/common';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
 interface Review {
     id: number;
@@ -14,7 +16,13 @@ interface Review {
     selector: 'vsf-top-reviews',
     templateUrl: './top-reviews.component.html',
     styleUrls: ['./top-reviews.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        FontAwesomeModule,
+        NgForOf,
+        NgClass
+    ]
 })
 export class TopReviewsComponent {
     reviews: Review[] = [

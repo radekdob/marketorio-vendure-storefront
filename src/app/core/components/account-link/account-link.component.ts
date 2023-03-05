@@ -1,4 +1,7 @@
+import {AsyncPipe, NgIf} from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {RouterLink} from '@angular/router';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import { Observable } from 'rxjs';
 import { map, switchMap, take } from 'rxjs/operators';
 
@@ -12,6 +15,13 @@ import { StateService } from '../../providers/state/state.service';
     templateUrl: './account-link.component.html',
     // styleUrls: ['./account-link.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        NgIf,
+        AsyncPipe,
+        RouterLink,
+        FontAwesomeModule
+    ]
 })
 export class AccountLinkComponent implements OnInit {
 

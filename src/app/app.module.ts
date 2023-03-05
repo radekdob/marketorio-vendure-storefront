@@ -1,13 +1,22 @@
-import { DOCUMENT } from '@angular/common';
-import { Inject, NgModule } from '@angular/core';
-import { BrowserModule, BrowserTransferStateModule, makeStateKey, TransferState } from '@angular/platform-browser';
-import { NavigationEnd, Router, RouterModule, UrlSerializer } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import {DOCUMENT} from '@angular/common';
+import {Inject, NgModule} from '@angular/core';
+import {BrowserModule, BrowserTransferStateModule, makeStateKey, TransferState} from '@angular/platform-browser';
+import {NavigationEnd, Router, RouterModule, UrlSerializer} from '@angular/router';
+import {filter} from 'rxjs/operators';
 
-import { AppComponent } from './app.component';
-import { routes } from './app.routes';
-import { CoreModule } from './core/core.module';
-import { SharedModule } from './shared/shared.module';
+import {AppComponent} from './app.component';
+import {routes} from './app.routes';
+import {AccountLinkComponent} from './core/components/account-link/account-link.component';
+import {CartDrawerComponent} from './core/components/cart-drawer/cart-drawer.component';
+import {CartToggleComponent} from './core/components/cart-toggle/cart-toggle.component';
+import {CollectionsMenuMobileComponent} from './core/components/collections-menu-mobile/collections-menu-mobile.component';
+import {CollectionsMenuComponent} from './core/components/collections-menu/collections-menu.component';
+import {LayoutFooterComponent} from './core/components/layout/layout-footer.component';
+import {LayoutHeaderComponent} from './core/components/layout/layout-header.component';
+import {LayoutComponent} from './core/components/layout/layout.component';
+import {MobileMenuToggleComponent} from './core/components/mobile-menu-toggle/mobile-menu-toggle.component';
+import {ProductSearchBarComponent} from './core/components/product-search-bar/product-search-bar.component';
+import {CoreModule} from './core/core.module';
 
 const STATE_KEY = makeStateKey<any>('apollo.state');
 
@@ -18,9 +27,18 @@ const STATE_KEY = makeStateKey<any>('apollo.state');
     imports: [
         BrowserModule.withServerTransition({appId: 'serverApp'}),
         BrowserTransferStateModule,
-        RouterModule.forRoot(routes, { scrollPositionRestoration: 'disabled', initialNavigation: 'enabledBlocking' }),
+        RouterModule.forRoot(routes, {scrollPositionRestoration: 'disabled', initialNavigation: 'enabledBlocking'}),
         CoreModule,
-        SharedModule,
+        LayoutComponent,
+        AccountLinkComponent,
+        MobileMenuToggleComponent,
+        CollectionsMenuComponent,
+        ProductSearchBarComponent,
+        CartToggleComponent,
+        CollectionsMenuMobileComponent,
+        CartDrawerComponent,
+        LayoutHeaderComponent,
+        LayoutFooterComponent
         // Using the service worker appears to break SSR after the initial page load.
         // ServiceWorkerModule.register(`${environment.baseHref}ngsw-worker.js`, {
         //     enabled: environment.production,

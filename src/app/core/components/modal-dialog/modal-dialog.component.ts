@@ -1,10 +1,11 @@
-import { ChangeDetectorRef, Component, Inject, TemplateRef, Type } from '@angular/core';
-import { Subject } from 'rxjs';
-import {SharedModule} from '../../../shared/shared.module';
+import {AsyncPipe, NgIf, NgTemplateOutlet} from '@angular/common';
+import {Component, Inject, TemplateRef, Type} from '@angular/core';
+import {Subject} from 'rxjs';
 
-import { Dialog, DIALOG_COMPONENT, MODAL_OPTIONS, ModalOptions } from '../../providers/modal/modal-types';
+import {Dialog, DIALOG_COMPONENT, MODAL_OPTIONS, ModalOptions} from '../../providers/modal/modal-types';
 
-import { DialogButtonsDirective } from './dialog-buttons.directive';
+import {DialogButtonsDirective} from './dialog-buttons.directive';
+import {DialogComponentOutletComponent} from './dialog-component-outlet.component';
 
 /**
  * This component should only be instatiated dynamically by the ModalService. It should not be used
@@ -16,7 +17,11 @@ import { DialogButtonsDirective } from './dialog-buttons.directive';
     // styleUrls: ['./modal-dialog.component.scss'],
     standalone: true,
     imports: [
-        SharedModule
+        NgIf,
+        NgTemplateOutlet,
+        AsyncPipe,
+        DialogComponentOutletComponent
+
     ]
 })
 export class ModalDialogComponent<T extends Dialog<any>> {
@@ -27,7 +32,8 @@ export class ModalDialogComponent<T extends Dialog<any>> {
     constructor(
         @Inject(DIALOG_COMPONENT) public childComponentType: Type<T>,
         @Inject(MODAL_OPTIONS) public options?: ModalOptions<T>,
-    ) {}
+    ) {
+    }
 
     /**
      * This callback is invoked when the childComponentType is instantiated in the

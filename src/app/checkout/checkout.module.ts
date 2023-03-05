@@ -1,9 +1,14 @@
+import {AsyncPipe, NgClass, NgForOf, NgIf} from '@angular/common';
 import { NgModule } from '@angular/core';
+import {ReactiveFormsModule} from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {AddressFormComponent} from '../shared/components/address-form/address-form.component';
 import {RadioCardFieldsetComponent} from '../shared/components/radio-card/radio-card-fieldset.component';
 import {RadioCardComponent} from '../shared/components/radio-card/radio-card.component';
+import {SignInComponent} from '../shared/components/sign-in/sign-in.component';
+import {FormatPricePipe} from '../shared/pipes/format-price.pipe';
 
-import { SharedModule } from '../shared/shared.module';
 
 import { routes } from './checkout.routes';
 import { CheckoutConfirmationComponent } from './components/checkout-confirmation/checkout-confirmation.component';
@@ -25,10 +30,18 @@ const DECLARATIONS = [
 @NgModule({
     declarations: DECLARATIONS,
     imports: [
-        SharedModule,
         RouterModule.forChild(routes),
         RadioCardFieldsetComponent,
         RadioCardComponent,
+        FontAwesomeModule,
+        SignInComponent,
+        AddressFormComponent,
+        AsyncPipe,
+        FormatPricePipe,
+        NgForOf,
+        ReactiveFormsModule,
+        NgIf,
+        NgClass,
     ],
 })
 export class CheckoutModule {

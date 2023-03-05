@@ -1,24 +1,17 @@
-import { Overlay, OverlayConfig } from '@angular/cdk/overlay';
-import { TemplatePortal } from '@angular/cdk/portal';
-import { DOCUMENT } from '@angular/common';
-import {
-    ChangeDetectionStrategy,
-    Component,
-    Inject,
-    OnDestroy,
-    OnInit,
-    TemplateRef,
-    ViewChild,
-    ViewContainerRef,
-} from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { debounceTime, map, takeUntil } from 'rxjs/operators';
+import {Overlay, OverlayConfig} from '@angular/cdk/overlay';
+import {TemplatePortal} from '@angular/cdk/portal';
+import {AsyncPipe, DOCUMENT, NgForOf, NgIf} from '@angular/common';
+import {ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit, TemplateRef, ViewChild, ViewContainerRef,} from '@angular/core';
+import {RouterLink} from '@angular/router';
+import {Observable, Subject} from 'rxjs';
+import {debounceTime, map, takeUntil} from 'rxjs/operators';
 
-import { GetCollectionsQuery, GetCollectionsQueryVariables } from '../../../common/generated-types';
-import { GET_COLLECTIONS } from '../../../common/graphql/documents.graphql';
-import { DataService } from '../../../core/providers/data/data.service';
+import {GetCollectionsQuery, GetCollectionsQueryVariables} from '../../../common/generated-types';
+import {GET_COLLECTIONS} from '../../../common/graphql/documents.graphql';
+import {DataService} from '../../../core/providers/data/data.service';
+import {CollectionCardComponent} from '../../../shared/components/collection-card/collection-card.component';
 
-import { arrayToTree, RootNode, TreeNode } from './array-to-tree';
+import {arrayToTree, RootNode, TreeNode} from './array-to-tree';
 
 type CollectionItem = GetCollectionsQuery['collections']['items'][number];
 
@@ -27,23 +20,32 @@ type CollectionItem = GetCollectionsQuery['collections']['items'][number];
     templateUrl: './collections-menu.component.html',
     // styleUrls: ['./collections-menu.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        RouterLink,
+        AsyncPipe,
+        CollectionCardComponent,
+        NgForOf,
+        NgIf
+    ]
 })
 export class CollectionsMenuComponent implements OnInit, OnDestroy {
 
     collectionTree$: Observable<RootNode<CollectionItem>>;
     activeCollection: TreeNode<CollectionItem> | null;
 
-    @ViewChild('menuTemplate', { read: TemplateRef, static: false }) menuTemplate: TemplateRef<any>;
+    @ViewChild('menuTemplate', {read: TemplateRef, static: false}) menuTemplate: TemplateRef<any>;
 
     private closeFn: (() => any) | null = null;
-    private overlayIsOpen$ = new Subject<boolean>();
-    private setActiveCollection$ = new Subject<TreeNode<CollectionItem>>();
+    overlayIsOpen$ = new Subject<boolean>();
+    setActiveCollection$ = new Subject<TreeNode<CollectionItem>>();
     private destroy$ = new Subject();
 
     constructor(@Inject(DOCUMENT) private document: Document,
                 private dataService: DataService,
                 private overlay: Overlay,
-                private viewContainerRef: ViewContainerRef) { }
+                private viewContainerRef: ViewContainerRef) {
+    }
 
     ngOnInit() {
         this.collectionTree$ = this.dataService.query<GetCollectionsQuery, GetCollectionsQueryVariables>(GET_COLLECTIONS).pipe(
@@ -105,8 +107,8 @@ export class CollectionsMenuComponent implements OnInit, OnDestroy {
         }
         const positionStrategy = this.overlay.position().flexibleConnectedTo(this.viewContainerRef.element)
             .withPositions([{
-                originX : 'center',
-                originY : 'bottom',
+                originX: 'center',
+                originY: 'bottom',
                 overlayX: 'center',
                 overlayY: 'top',
             }])
