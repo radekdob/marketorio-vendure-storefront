@@ -5,7 +5,8 @@
     "ng": "ng",
     "start": "ng serve --port 4201",
     "build": "ng build",
-    "analyze-prod-bundle": "ng build --prod --statsJson=true && webpack-bundle-analyzer dist/browser/stats.json",
+    "analyze-prod-bundle": "ng build --stats-json=true && webpack-bundle-analyzer dist/browser/stats.json",
+    "source-map-explorer": "source-map-explorer dist/browser/**/*.js",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
@@ -14,6 +15,7 @@
     "serve:ssr": "node dist/server/main.js",
     "build:ssr": "ng build --configuration=production && ng run reference-storefront:server:production",
     "build:ssr:docker": "ng build --configuration=production,docker && ng run reference-storefront:server:docker",
+    "build:ssr:pre-production": "ng build --configuration=pre-production",
     "prerender": "ng run reference-storefront:prerender"
   },
   "private": true,
@@ -43,6 +45,7 @@
     "graphql": "^16.6.0",
     "photoswipe": "^5.3.4",
     "rxjs": "~6.6.3",
+    "source-map-explorer": "^2.5.3",
     "tslib": "^2.4.0",
     "zone.js": "~0.11.4"
   },
