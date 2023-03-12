@@ -8,8 +8,8 @@ import {filter, map, switchMap, withLatestFrom} from 'rxjs/operators';
 
 import {AddToCartMutation, AddToCartMutationVariables, GetProductDetailQuery, GetProductDetailQueryVariables} from '../common/generated-types';
 import {notNullOrUndefined} from '../common/utils/not-null-or-undefined';
-import {AssetGalleryComponent} from '../core/components/asset-gallery/asset-gallery.component';
-import {CollectionBreadcrumbsComponent} from '../core/components/collection-breadcrumbs/collection-breadcrumbs.component';
+import {AssetGalleryComponent} from '../shared/components/asset-gallery/asset-gallery.component';
+import {CollectionBreadcrumbsComponent} from '../shared/components/collection-breadcrumbs/collection-breadcrumbs.component';
 import {ActiveService} from '../core/providers/active/active.service';
 import {DataService} from '../core/providers/data/data.service';
 import {NotificationService} from '../core/providers/notification/notification.service';

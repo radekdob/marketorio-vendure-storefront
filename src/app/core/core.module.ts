@@ -7,8 +7,6 @@ import {setContext} from '@apollo/client/link/context';
 import {FaIconLibrary} from '@fortawesome/angular-fontawesome';
 import {APOLLO_OPTIONS, ApolloModule} from 'apollo-angular';
 import {HttpLink} from 'apollo-angular/http';
-
-
 import {environment} from '../../environments/environment';
 import possibleTypesData from '../common/introspection-results';
 import {buildIconLibrary} from './icon-library';

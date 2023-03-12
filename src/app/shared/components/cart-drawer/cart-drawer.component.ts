@@ -12,12 +12,12 @@ import {
     RemoveItemFromCartMutation,
     RemoveItemFromCartMutationVariables
 } from '../../../common/generated-types';
-import {CartContentsComponent} from '../../../shared/components/cart-contents/cart-contents.component';
-import {FormatPricePipe} from '../../../shared/pipes/format-price.pipe';
-import {ActiveService} from '../../providers/active/active.service';
-import {DataService} from '../../providers/data/data.service';
-import {NotificationService} from '../../providers/notification/notification.service';
-import {StateService} from '../../providers/state/state.service';
+import {CartContentsComponent} from '../cart-contents/cart-contents.component';
+import {FormatPricePipe} from '../../pipes/format-price.pipe';
+import {ActiveService} from '../../../core/providers/active/active.service';
+import {DataService} from '../../../core/providers/data/data.service';
+import {NotificationService} from '../../../core/providers/notification/notification.service';
+import {StateService} from '../../../core/providers/state/state.service';
 
 import {ADJUST_ITEM_QUANTITY, REMOVE_ITEM_FROM_CART} from './cart-drawer.graphql';
 

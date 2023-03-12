@@ -3,7 +3,7 @@ import {AfterViewInit, Component, ElementRef, Inject, Input, OnChanges, OnInit, 
 import PhotoSwipeLightbox from 'photoswipe/lightbox';
 
 import {AssetFragment} from '../../../common/generated-types';
-import {AssetPreviewPipe} from '../../../shared/pipes/asset-preview.pipe';
+import {AssetPreviewPipe} from '../../pipes/asset-preview.pipe';
 
 import './types.d';
 

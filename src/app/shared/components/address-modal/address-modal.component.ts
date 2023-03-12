@@ -11,8 +11,8 @@ import {
     GetAvailableCountriesQuery
 } from '../../../common/generated-types';
 import { GET_AVAILABLE_COUNTRIES } from '../../../common/graphql/documents.graphql';
-import {DialogButtonsDirective} from '../../../core/components/modal-dialog/dialog-buttons.directive';
-import {DialogTitleDirective} from '../../../core/components/modal-dialog/dialog-title.directive';
+import {DialogButtonsDirective} from '../modal-dialog/dialog-buttons.directive';
+import {DialogTitleDirective} from '../modal-dialog/dialog-title.directive';
 import { DataService } from '../../../core/providers/data/data.service';
 import { Dialog } from '../../../core/providers/modal/modal-types';
 import {AddressFormComponent} from '../address-form/address-form.component';

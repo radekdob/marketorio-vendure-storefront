@@ -13,9 +13,9 @@ import {
     SearchProductsQueryVariables
 } from '../common/generated-types';
 import { getRouteArrayParam } from '../common/utils/get-route-array-param';
-import {CollectionBreadcrumbsComponent} from '../core/components/collection-breadcrumbs/collection-breadcrumbs.component';
-import {ProductCardComponent} from '../core/components/product-card/product-card.component';
-import {ProductListControlsComponent} from '../core/components/product-list-controls/product-list-controls.component';
+import {CollectionBreadcrumbsComponent} from '../shared/components/collection-breadcrumbs/collection-breadcrumbs.component';
+import {ProductCardComponent} from '../shared/components/product-card/product-card.component';
+import {ProductListControlsComponent} from '../shared/components/product-list-controls/product-list-controls.component';
 import {CollectionCardComponent} from '../shared/components/collection-card/collection-card.component';
 import { AssetPreviewPipe } from '../shared/pipes/asset-preview.pipe';
 import { DataService } from '../core/providers/data/data.service';

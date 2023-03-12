@@ -5,8 +5,8 @@ import { from, interval, merge, Observable, timer, zip } from 'rxjs';
 import { delay, distinctUntilChanged, map, refCount, share, shareReplay, switchMap } from 'rxjs/operators';
 
 import { GetCartTotalsQuery } from '../../../common/generated-types';
-import { DataService } from '../../providers/data/data.service';
-import { StateService } from '../../providers/state/state.service';
+import { DataService } from '../../../core/providers/data/data.service';
+import { StateService } from '../../../core/providers/state/state.service';
 
 import { GET_CART_TOTALS } from './cart-toggle.graphql';
 

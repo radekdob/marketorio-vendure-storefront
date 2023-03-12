@@ -3,8 +3,8 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import {RouterLink} from '@angular/router';
 
 import { SearchProductsQuery } from '../../../common/generated-types';
-import {AssetPreviewPipe} from '../../../shared/pipes/asset-preview.pipe';
-import {FormatPricePipe} from '../../../shared/pipes/format-price.pipe';
+import {AssetPreviewPipe} from '../../pipes/asset-preview.pipe';
+import {FormatPricePipe} from '../../pipes/format-price.pipe';
 
 @Component({
     selector: 'vsf-product-card',

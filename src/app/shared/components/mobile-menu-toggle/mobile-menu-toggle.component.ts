@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
-import {StateService} from '../../providers/state/state.service';
+import {StateService} from '../../../core/providers/state/state.service';
 
 @Component({
     selector: 'vsf-mobile-menu-toggle',

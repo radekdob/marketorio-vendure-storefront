@@ -7,8 +7,8 @@ import { map, switchMap, take } from 'rxjs/operators';
 
 import { GetActiveCustomerQuery } from '../../../common/generated-types';
 import { GET_ACTIVE_CUSTOMER } from '../../../common/graphql/documents.graphql';
-import { DataService } from '../../providers/data/data.service';
-import { StateService } from '../../providers/state/state.service';
+import { DataService } from '../../../core/providers/data/data.service';
+import { StateService } from '../../../core/providers/state/state.service';
 
 @Component({
     selector: 'vsf-account-link',

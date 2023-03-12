@@ -9,7 +9,7 @@ import {debounceTime, map, takeUntil} from 'rxjs/operators';
 import {GetCollectionsQuery, GetCollectionsQueryVariables} from '../../../common/generated-types';
 import {GET_COLLECTIONS} from '../../../common/graphql/documents.graphql';
 import {DataService} from '../../../core/providers/data/data.service';
-import {CollectionCardComponent} from '../../../shared/components/collection-card/collection-card.component';
+import {CollectionCardComponent} from '../collection-card/collection-card.component';
 
 import {arrayToTree, RootNode, TreeNode} from './array-to-tree';
 

@@ -2,7 +2,7 @@ import {NgClass, NgIf, NgTemplateOutlet} from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Output } from '@angular/core';
 import { Subject } from 'rxjs';
 
-import { NotificationOptions, NOTIFICATION_OPTIONS } from '../../providers/notification/notification-types';
+import { NotificationOptions, NOTIFICATION_OPTIONS } from '../../../core/providers/notification/notification-types';
 
 @Component({
     selector: 'vsf-notification',

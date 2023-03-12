@@ -7,8 +7,8 @@ import { map } from 'rxjs/operators';
 
 import { GetCollectionsQuery, GetCollectionsQueryVariables } from '../../../common/generated-types';
 import { GET_COLLECTIONS } from '../../../common/graphql/documents.graphql';
-import { DataService } from '../../providers/data/data.service';
-import { StateService } from '../../providers/state/state.service';
+import { DataService } from '../../../core/providers/data/data.service';
+import { StateService } from '../../../core/providers/state/state.service';
 import { arrayToTree, RootNode, TreeNode } from '../collections-menu/array-to-tree';
 
 

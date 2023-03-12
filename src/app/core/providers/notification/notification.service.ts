@@ -4,7 +4,7 @@ import { Injectable, Injector } from '@angular/core';
 import { race, timer } from 'rxjs';
 import { finalize, mapTo, take } from 'rxjs/operators';
 
-import { NotificationComponent } from '../../components/notification/notification.component';
+import { NotificationComponent } from '../../../shared/components/notification/notification.component';
 
 import { NOTIFICATION_OPTIONS, NotificationOptions } from './notification-types';
 
