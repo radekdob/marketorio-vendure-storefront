@@ -3,7 +3,7 @@
   "version": "0.2.2",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --port 4201",
+    "start": "ng serve --port 4201 --ssl",
     "build": "ng build",
     "analyze-prod-bundle": "ng build --stats-json=true && webpack-bundle-analyzer dist/browser/stats.json",
     "source-map-explorer": "source-map-explorer dist/browser/**/*.js",

@@ -1,20 +1,19 @@
-import {ChangeDetectionStrategy, Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {PaymentIntent, StripeCardElementOptions, StripeElementsOptions} from '@stripe/stripe-js';
-import {StripeCardComponent, StripeCardNumberComponent, StripeService} from 'ngx-stripe';
+import {StripeCardElementOptions, StripeElements, StripeElementsOptions} from '@stripe/stripe-js';
+import {StripeCardComponent, StripeService} from 'ngx-stripe';
 import {Observable} from 'rxjs';
 import {map, switchMap, tap} from 'rxjs/operators';
 
 import {
-    AddPaymentMutation,
-    AddPaymentMutationVariables,
-    CreateStripePaymentIntentMutation, CreateStripePaymentIntentMutationVariables,
+    CreateStripePaymentIntentMutation,
+    CreateStripePaymentIntentMutationVariables,
     GetEligiblePaymentMethodsQuery
 } from '../../../common/generated-types';
 import {DataService} from '../../../core/providers/data/data.service';
 import {StateService} from '../../../core/providers/state/state.service';
 
-import {ADD_PAYMENT, CREATE_STRIPE_PAYMENT_INTENT, GET_ELIGIBLE_PAYMENT_METHODS} from './checkout-payment.graphql';
+import {CREATE_STRIPE_PAYMENT_INTENT, GET_ELIGIBLE_PAYMENT_METHODS} from './checkout-payment.graphql';
 
 @Component({
     selector: 'vsf-checkout-payment',
@@ -49,6 +48,7 @@ export class CheckoutPaymentComponent implements OnInit {
     elementsOptions: StripeElementsOptions = {
         locale: 'pl'
     };
+    elements: StripeElements | undefined;
 
     constructor(private dataService: DataService,
                 private stateService: StateService,
@@ -63,7 +63,14 @@ export class CheckoutPaymentComponent implements OnInit {
             .pipe(map(res => res.eligiblePaymentMethods));
 
         this.createPaymentIntent().pipe(
-            tap(x => this.elementsOptions.clientSecret = x.createStripePaymentIntent)
+            tap(x => {
+                const stripe = this.stripeService.getInstance();
+                this.elements = stripe!.elements({
+                    clientSecret: x.createStripePaymentIntent
+                });
+                const paymentElement = this.elements.create('payment');
+                paymentElement.mount('#payment-element');
+            })
         ).subscribe()
     }
 
@@ -73,44 +80,6 @@ export class CheckoutPaymentComponent implements OnInit {
         );
     }
 
-    getMonths(): number[] {
-        return Array.from({length: 12}).map((_, i) => i + 1);
-    }
-
-    getYears(): number[] {
-        const year = new Date().getFullYear();
-        return Array.from({length: 10}).map((_, i) => year + i);
-    }
-
-    completeOrder(paymentMethodCode: string) {
-        this.dataService.mutate<AddPaymentMutation, AddPaymentMutationVariables>(ADD_PAYMENT, {
-            input: {
-                method: paymentMethodCode,
-                metadata: {},
-            },
-        })
-            .subscribe(async ({addPaymentToOrder}) => {
-                switch (addPaymentToOrder?.__typename) {
-                    case 'Order':
-                        const order = addPaymentToOrder;
-                        if (order && (order.state === 'PaymentSettled' || order.state === 'PaymentAuthorized')) {
-                            await new Promise<void>(resolve => setTimeout(() => {
-                                this.stateService.setState('activeOrderId', null);
-                                resolve();
-                            }, 500));
-                            this.router.navigate(['../confirmation', order.code], {relativeTo: this.route});
-                        }
-                        break;
-                    case 'OrderPaymentStateError':
-                    case 'PaymentDeclinedError':
-                    case 'PaymentFailedError':
-                    case 'OrderStateTransitionError':
-                        this.paymentErrorMessage = addPaymentToOrder.message;
-                        break;
-                }
-
-            });
-    }
 
     pay() {
         this.createPaymentIntent()
@@ -137,5 +106,31 @@ export class CheckoutPaymentComponent implements OnInit {
                     }
                 }
             })
+    }
+
+    async handlePayment(event: SubmitEvent) {
+        event.preventDefault();
+
+        // @ts-ignore
+        const {error} = await this.stripeService.getInstance()?.confirmPayment({
+            elements: this.elements,
+            confirmParams: {
+                return_url: 'http://localhost:4200/account',
+            }
+        })
+
+        if (error) {
+            // This point will only be reached if there is an immediate error when
+            // confirming the payment. Show error to your customer (for example, payment
+            // details incomplete)
+            const messageContainer = document.querySelector('#error-message');
+            if (messageContainer) {
+                messageContainer.textContent = error.message;
+            }
+        } else {
+            // Your customer will be redirected to your `return_url`. For some payment
+            // methods like iDEAL, your customer will be redirected to an intermediate
+            // site first to authorize the payment, then redirected to the `return_url`.
+        }
     }
 }
