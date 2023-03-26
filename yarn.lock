@@ -2660,6 +2660,11 @@
   resolved "https://registry.yarnpkg.com/@socket.io/component-emitter/-/component-emitter-3.1.0.tgz#96116f2a912e0c02817345b3c10751069920d553"
   integrity sha512-+9jVqKhRSpsc591z5vX+X5Yyw+he/HCB4iQ/RYxw35CEPaY1gnsNE43nf9n9AaYjAQrTiI/mOwKUKdUs9vf7Xg==
 
+"@stripe/stripe-js@^1.52.0":
+  version "1.52.0"
+  resolved "https://registry.yarnpkg.com/@stripe/stripe-js/-/stripe-js-1.52.0.tgz#39c5a074fcf45ae7c0567b198c9246ca6de7aafc"
+  integrity sha512-Ja2VlaTf3kM5tN4Y0sC8T3ibZAnfGUU/QzMAlk/G+Adz2fF1ycTabtSkdSuVP4/adXox8NkPPV4Xndx/EP4fMg==
+
 "@tailwindcss/forms@^0.5.3":
   version "0.5.3"
   resolved "https://registry.yarnpkg.com/@tailwindcss/forms/-/forms-0.5.3.tgz#e4d7989686cbcaf416c53f1523df5225332a86e7"
@@ -8440,6 +8445,13 @@ ng-packagr@^15.0.1:
     sass "^1.55.0"
   optionalDependencies:
     esbuild "^0.15.9"
+
+ngx-stripe@^15.5.1:
+  version "15.5.1"
+  resolved "https://registry.yarnpkg.com/ngx-stripe/-/ngx-stripe-15.5.1.tgz#a9d10cc3e45ed75d8c61fad0f0fe681a2954e7dd"
+  integrity sha512-FVICJq5W1o/kTfqy4zOyhnR61G4P8P7OqthozlABXHQlzbC0KUkfYIYTT7iCLiV3Bm1SB8URgmdSlMAEVv4RoQ==
+  dependencies:
+    tslib "^2.3.0"
 
 nice-napi@^1.0.2:
   version "1.0.2"
