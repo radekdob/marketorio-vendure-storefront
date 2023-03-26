@@ -38,7 +38,8 @@
       "IntCustomFieldConfig",
       "LocaleStringCustomFieldConfig",
       "RelationCustomFieldConfig",
-      "StringCustomFieldConfig"
+      "StringCustomFieldConfig",
+      "TextCustomFieldConfig"
     ],
     "CustomFieldConfig": [
       "BooleanCustomFieldConfig",
@@ -47,7 +48,8 @@
       "IntCustomFieldConfig",
       "LocaleStringCustomFieldConfig",
       "RelationCustomFieldConfig",
-      "StringCustomFieldConfig"
+      "StringCustomFieldConfig",
+      "TextCustomFieldConfig"
     ],
     "ErrorResult": [
       "AlreadyLoggedInError",
@@ -73,6 +75,7 @@
       "PasswordAlreadySetError",
       "PasswordResetTokenExpiredError",
       "PasswordResetTokenInvalidError",
+      "PasswordValidationError",
       "PaymentDeclinedError",
       "PaymentFailedError",
       "VerificationTokenExpiredError",
@@ -101,6 +104,7 @@
       "OrderItem",
       "OrderLine",
       "Payment",
+      "PaymentMethod",
       "Product",
       "ProductOption",
       "ProductOptionGroup",
@@ -139,6 +143,7 @@
     "RegisterCustomerAccountResult": [
       "MissingPasswordError",
       "NativeAuthStrategyError",
+      "PasswordValidationError",
       "Success"
     ],
     "RemoveOrderItemsResult": [
@@ -158,8 +163,10 @@
     "ResetPasswordResult": [
       "CurrentUser",
       "NativeAuthStrategyError",
+      "NotVerifiedError",
       "PasswordResetTokenExpiredError",
-      "PasswordResetTokenInvalidError"
+      "PasswordResetTokenInvalidError",
+      "PasswordValidationError"
     ],
     "SearchResultPrice": [
       "PriceRange",
@@ -190,6 +197,7 @@
     "UpdateCustomerPasswordResult": [
       "InvalidCredentialsError",
       "NativeAuthStrategyError",
+      "PasswordValidationError",
       "Success"
     ],
     "UpdateOrderItemsResult": [
@@ -204,6 +212,7 @@
       "MissingPasswordError",
       "NativeAuthStrategyError",
       "PasswordAlreadySetError",
+      "PasswordValidationError",
       "VerificationTokenExpiredError",
       "VerificationTokenInvalidError"
     ]

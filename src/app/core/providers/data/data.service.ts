@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { NetworkStatus, WatchQueryFetchPolicy } from '@apollo/client/core';
+import {NetworkStatus, OperationVariables, WatchQueryFetchPolicy} from '@apollo/client/core';
 import { Apollo } from 'apollo-angular';
 import { DocumentNode } from 'graphql';
 import { Observable } from 'rxjs';
@@ -16,7 +16,7 @@ export class DataService {
 
     constructor(private apollo: Apollo) { }
 
-    query<T = any, V = any>(query: DocumentNode, variables?: V, fetchPolicy?: WatchQueryFetchPolicy): Observable<T> {
+    query<T = any, V extends OperationVariables = any>(query: DocumentNode, variables?: V, fetchPolicy?: WatchQueryFetchPolicy): Observable<T> {
         return this.apollo.watchQuery<T, V>({
             query,
             variables,

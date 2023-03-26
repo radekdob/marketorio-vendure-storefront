@@ -1,6 +1,6 @@
 import {AsyncPipe, NgClass, NgForOf, NgIf} from '@angular/common';
 import { NgModule } from '@angular/core';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {AddressFormComponent} from '../shared/components/address-form/address-form.component';
@@ -42,6 +42,7 @@ const DECLARATIONS = [
         ReactiveFormsModule,
         NgIf,
         NgClass,
+        FormsModule,
     ],
 })
 export class CheckoutModule {
