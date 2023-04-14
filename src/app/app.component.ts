@@ -43,6 +43,8 @@ export class AppComponent implements OnInit {
         this.topCollections$ = this.dataService.query<GetCollectionsQuery, GetCollectionsQueryVariables>(GET_COLLECTIONS).pipe(
             map(({collections}) => collections.items.filter(c => c.parent?.name === '__root_collection__'))
         );
+
+        this.stateService.select(s => s.activeOrderId).subscribe(x => console.log(x))
     }
 
     openCartDrawer() {

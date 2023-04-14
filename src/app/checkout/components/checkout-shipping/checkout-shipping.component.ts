@@ -87,6 +87,7 @@ export class CheckoutShippingComponent implements OnInit, OnDestroy {
         this.eligibleShippingMethods$ = this.shippingAddress$.pipe(
             switchMap(() => this.dataService.query<GetEligibleShippingMethodsQuery>(GET_ELIGIBLE_SHIPPING_METHODS)),
             map(data => data.eligibleShippingMethods),
+            tap(x => console.log(x))
         );
 
         shippingData$.pipe(

@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {StripeCardElementOptions, StripeElements, StripeElementsOptions} from '@stripe/stripe-js';
 import {StripeCardComponent, StripeService} from 'ngx-stripe';
@@ -19,7 +19,7 @@ import {CREATE_STRIPE_PAYMENT_INTENT, GET_ELIGIBLE_PAYMENT_METHODS} from './chec
     selector: 'vsf-checkout-payment',
     templateUrl: './checkout-payment.component.html',
     // styleUrls: ['./checkout-payment.component.scss'],
-    //  changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CheckoutPaymentComponent implements OnInit {
     @ViewChild(StripeCardComponent) card: StripeCardComponent;
@@ -54,7 +54,8 @@ export class CheckoutPaymentComponent implements OnInit {
                 private stateService: StateService,
                 private router: Router,
                 private route: ActivatedRoute,
-                private stripeService: StripeService
+                private stripeService: StripeService,
+                private cdRef: ChangeDetectorRef
     ) {
     }
 
@@ -62,15 +63,29 @@ export class CheckoutPaymentComponent implements OnInit {
         this.paymentMethods$ = this.dataService.query<GetEligiblePaymentMethodsQuery>(GET_ELIGIBLE_PAYMENT_METHODS)
             .pipe(map(res => res.eligiblePaymentMethods));
 
+      /*  this.stripeService.getStripeReference().subscribe(x => {
+            const stripe = this.stripeService.getInstance();
+            this.elements = stripe?.elements({
+                //  clientSecret: x.createStripePaymentIntent
+            });
+            const paymentElement = this.elements?.create('payment');
+            paymentElement?.mount('#payment-element');
+        });*/
+
         this.createPaymentIntent().pipe(
-            tap(x => {
-                const stripe = this.stripeService.getInstance();
-                this.elements = stripe!.elements({
-                    clientSecret: x.createStripePaymentIntent
-                });
-                const paymentElement = this.elements.create('payment');
-                paymentElement.mount('#payment-element');
-            })
+            switchMap(intent => this.stripeService.getStripeReference()
+                .pipe(
+                    tap(() => {
+                        const stripe = this.stripeService.getInstance();
+                        this.elements = stripe?.elements({
+                            clientSecret: intent.createStripePaymentIntent
+                        });
+                        const paymentElement = this.elements?.create('payment');
+                        paymentElement?.mount('#payment-element');
+                        this.cdRef.detectChanges();
+                    })
+                )
+            )
         ).subscribe()
     }
 

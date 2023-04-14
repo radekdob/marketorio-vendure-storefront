@@ -5,7 +5,10 @@ import {RouterModule} from '@angular/router';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {NgxStripeModule} from 'ngx-stripe';
 import {environment} from '../../environments/environment';
+import {AddressCardComponent} from '../shared/components/address-card/address-card.component';
 import {AddressFormComponent} from '../shared/components/address-form/address-form.component';
+import {CartContentsComponent} from '../shared/components/cart-contents/cart-contents.component';
+import {CartTotalsComponent} from '../shared/components/cart-totals/cart-totals.component';
 import {RadioCardFieldsetComponent} from '../shared/components/radio-card/radio-card-fieldset.component';
 import {RadioCardComponent} from '../shared/components/radio-card/radio-card.component';
 import {SignInComponent} from '../shared/components/sign-in/sign-in.component';
@@ -43,9 +46,13 @@ const DECLARATIONS = [
         NgForOf,
         ReactiveFormsModule,
         NgIf,
+        NgIf,
         NgClass,
         FormsModule,
         NgxStripeModule.forRoot(environment.stripePublicKey),
+        CartContentsComponent,
+        CartTotalsComponent,
+        AddressCardComponent,
     ],
 })
 export class CheckoutModule {
