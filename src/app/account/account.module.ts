@@ -4,9 +4,11 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {AddressCardComponent} from '../shared/components/address-card/address-card.component';
 import {AddressFormComponent} from '../shared/components/address-form/address-form.component';
+import {AddressModalComponent} from '../shared/components/address-modal/address-modal.component';
 import {CartContentsComponent} from '../shared/components/cart-contents/cart-contents.component';
 import {CartTotalsComponent} from '../shared/components/cart-totals/cart-totals.component';
 import {CenteredCardComponent} from '../shared/components/centered-card/centered-card.component';
+import {ModalDialogComponent} from '../shared/components/modal-dialog/modal-dialog.component';
 import {SignInComponent} from '../shared/components/sign-in/sign-in.component';
 import {FormatPricePipe} from '../shared/pipes/format-price.pipe';
 
@@ -44,6 +46,7 @@ const DECLARATIONS = [
     ForgottenPasswordComponent,
     ChangeEmailAddressComponent,
     AccountSignInComponent,
+
 ];
 
 @NgModule({
@@ -59,7 +62,9 @@ const DECLARATIONS = [
         CartContentsComponent,
         CartTotalsComponent,
         FormatPricePipe,
-        SignInComponent
+        SignInComponent,
+        AddressModalComponent,
+        ModalDialogComponent
     ],
     providers: [
         AccountGuard,

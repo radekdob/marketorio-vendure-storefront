@@ -1,10 +1,12 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {Observable} from 'rxjs';
+import {map, switchMap} from 'rxjs/operators';
 
-import { GetCustomerAddressesQuery } from '../../../common/generated-types';
-import { GET_CUSTOMER_ADDRESSES } from '../../../common/graphql/documents.graphql';
-import { DataService } from '../../../core/providers/data/data.service';
+import {GetCustomerAddressesQuery} from '../../../common/generated-types';
+import {GET_CUSTOMER_ADDRESSES} from '../../../common/graphql/documents.graphql';
+import {DataService} from '../../../core/providers/data/data.service';
+import {ModalService} from '../../../core/providers/modal/modal.service';
+import {AddressModalComponent} from '../../../shared/components/address-modal/address-modal.component';
 
 @Component({
     selector: 'vsf-account-address-book',
@@ -15,7 +17,11 @@ import { DataService } from '../../../core/providers/data/data.service';
 export class AccountAddressBookComponent implements OnInit {
 
     addresses$: Observable<NonNullable<GetCustomerAddressesQuery['activeCustomer']>['addresses'] | undefined>;
-    constructor(private dataService: DataService) { }
+
+    constructor(private dataService: DataService,
+                private modalService: ModalService
+    ) {
+    }
 
     ngOnInit() {
         this.addresses$ = this.dataService.query<GetCustomerAddressesQuery>(GET_CUSTOMER_ADDRESSES).pipe(
@@ -23,4 +29,15 @@ export class AccountAddressBookComponent implements OnInit {
         );
     }
 
+    openAddNewAddressDialog() {
+        this.modalService.fromComponent(AddressModalComponent, {
+            locals: {
+                title: 'Create new address',
+            },
+            closable: true,
+        }).pipe(
+            switchMap(() => this.dataService.query<GetCustomerAddressesQuery>(GET_CUSTOMER_ADDRESSES, null, 'network-only')),
+        )
+            .subscribe();
+    }
 }

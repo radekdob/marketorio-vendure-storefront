@@ -122,7 +122,7 @@ export class CheckoutShippingComponent implements OnInit, OnDestroy {
     }
 
     createAddress() {
-        this.modalService.fromComponent(AddressModalComponent, {
+ /*       this.modalService.fromComponent(AddressModalComponent, {
             locals: {
                 title: 'Create new address',
             },
@@ -130,7 +130,7 @@ export class CheckoutShippingComponent implements OnInit, OnDestroy {
         }).pipe(
             switchMap(() => this.dataService.query<GetCustomerAddressesQuery>(GET_CUSTOMER_ADDRESSES, null, 'network-only')),
         )
-            .subscribe();
+            .subscribe();*/
     }
 
     editAddress(address: AddressFragment) {

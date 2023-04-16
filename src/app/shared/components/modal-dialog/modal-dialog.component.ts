@@ -6,6 +6,7 @@ import {Dialog, DIALOG_COMPONENT, MODAL_OPTIONS, ModalOptions} from '../../../co
 
 import {DialogButtonsDirective} from './dialog-buttons.directive';
 import {DialogComponentOutletComponent} from './dialog-component-outlet.component';
+import {DialogTitleDirective} from './dialog-title.directive';
 
 /**
  * This component should only be instatiated dynamically by the ModalService. It should not be used
@@ -14,14 +15,15 @@ import {DialogComponentOutletComponent} from './dialog-component-outlet.componen
 @Component({
     selector: 'vsf-modal-dialog',
     templateUrl: './modal-dialog.component.html',
-    // styleUrls: ['./modal-dialog.component.scss'],
+     styleUrls: ['./modal-dialog.component.scss'],
     standalone: true,
     imports: [
         NgIf,
         NgTemplateOutlet,
         AsyncPipe,
-        DialogComponentOutletComponent
-
+        DialogComponentOutletComponent,
+        DialogTitleDirective,
+        DialogButtonsDirective
     ]
 })
 export class ModalDialogComponent<T extends Dialog<any>> {

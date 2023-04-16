@@ -17,11 +17,16 @@ export class AccountGuard implements CanActivate {
         return this.stateService.select(state => state.signedIn).pipe(
             switchMap(signedIn => {
                 if (signedIn) {
+                    console.log('true')
                     return of(true);
                 } else {
-                    return this.dataService.query<GetActiveCustomerQuery>(GET_ACTIVE_CUSTOMER).pipe(
+                    console.log('not true')
+
+                    return of(false)
+
+                   /* return this.dataService.query<GetActiveCustomerQuery>(GET_ACTIVE_CUSTOMER).pipe(
                         map(data => !!data.activeCustomer),
-                    );
+                    );*/
                 }
             }),
         );

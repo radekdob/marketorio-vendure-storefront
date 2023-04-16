@@ -1,3 +1,10 @@
+<header class="p-2 my-2">
+    <button (click)="openAddNewAddressDialog()"
+            type="button"
+            class="btn btn-primary">
+        Add new
+    </button>
+</header>
 <div class="flex flex-wrap space-x-6">
     <vsf-address-card *ngFor="let address of addresses$ | async"
                       [address]="address"

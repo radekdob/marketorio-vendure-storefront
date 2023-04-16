@@ -1,20 +1,21 @@
-import { Overlay, OverlayConfig } from '@angular/cdk/overlay';
-import { ComponentPortal, PortalInjector } from '@angular/cdk/portal';
-import { Injectable, Injector, Type } from '@angular/core';
-import { Observable, race } from 'rxjs';
-import { finalize, mapTo, take, tap } from 'rxjs/operators';
+import {Overlay, OverlayConfig} from '@angular/cdk/overlay';
+import {ComponentPortal} from '@angular/cdk/portal';
+import {Injectable, Injector, StaticProvider, Type} from '@angular/core';
+import {Observable, race} from 'rxjs';
+import {finalize, mapTo, take} from 'rxjs/operators';
 
-import { ModalDialogComponent } from '../../../shared/components/modal-dialog/modal-dialog.component';
+import {ModalDialogComponent} from '../../../shared/components/modal-dialog/modal-dialog.component';
 
-import { Dialog, DIALOG_COMPONENT, MODAL_OPTIONS, ModalOptions } from './modal-types';
+import {Dialog, DIALOG_COMPONENT, MODAL_OPTIONS, ModalOptions} from './modal-types';
 
 /**
  * This service is responsible for instantiating a ModalDialog component and
  * embedding the specified component within.
  */
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class ModalService {
-    constructor(private overlay: Overlay, private injector: Injector) {}
+    constructor(private overlay: Overlay, private injector: Injector) {
+    }
 
     /**
      * Create a modal from a component. The component must implement the {@link Dialog} interface.
@@ -85,11 +86,20 @@ export class ModalService {
         );
     }
 
-    private createInjector<T, R>(component: Type<T> & Type<Dialog<R>>,  options?: ModalOptions<T>): PortalInjector {
-        const weakMap = new WeakMap<any, any>([
-            [DIALOG_COMPONENT, component],
-            [MODAL_OPTIONS, options],
-        ]);
-        return new PortalInjector(this.injector, weakMap);
+    private createInjector<T, R>(component: Type<T> & Type<Dialog<R>>, options?: ModalOptions<T>): Injector {
+        const providers: StaticProvider[] = [
+            {
+                provide: DIALOG_COMPONENT,
+                useValue: component
+            },
+            {
+                provide: MODAL_OPTIONS,
+                useValue: options
+            }
+        ];
+        return Injector.create({
+            providers,
+            parent: this.injector
+        });
     }
 }
