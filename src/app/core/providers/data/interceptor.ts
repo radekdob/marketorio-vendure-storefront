@@ -86,7 +86,10 @@ export class DefaultInterceptor implements HttpInterceptor {
         if (environment.tokenMethod === 'bearer' && isPlatformBrowser(this.platformId)) {
             const authToken = response.headers.get('vendure-auth-token');
             if (authToken) {
-                localStorage.setItem('authToken', authToken);
+                const date = new Date();
+                date.setTime(date.getTime() + (2 * 24 * 60 * 60 * 1000));
+                const expires = 'expires=' + date.toUTCString();
+                document.cookie = `${environment.tokenCookieName}=${authToken}; ${expires}; path=/`;
             }
         }
     }

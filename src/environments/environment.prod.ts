@@ -4,6 +4,7 @@ export const environment = {
     apiPort: 443,
     shopApiPath: 'shop-api',
     baseHref: '/',
-    tokenMethod: 'cookie',
+    tokenMethod: 'token',
+    tokenCookieName: 'bt',
     stripePublicKey: 'pk_test_51K937QDxUiWqKo77KPmbI2KK66aueWLu933iUMq5vYQDF04fQ37pUicr1eE31DLZf8kPfUh1SVgtqTehe4FmEa6k00brLHFyA1'
 };

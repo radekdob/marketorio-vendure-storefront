@@ -1,14 +1,14 @@
 import {AsyncPipe, NgIf} from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {RouterLink} from '@angular/router';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
-import { Observable } from 'rxjs';
-import { map, switchMap, take } from 'rxjs/operators';
+import {Observable} from 'rxjs';
+import {map, switchMap, take, tap} from 'rxjs/operators';
 
-import { GetActiveCustomerQuery } from '../../../common/generated-types';
-import { GET_ACTIVE_CUSTOMER } from '../../../common/graphql/documents.graphql';
-import { DataService } from '../../../core/providers/data/data.service';
-import { StateService } from '../../../core/providers/state/state.service';
+import {GetActiveCustomerQuery} from '../../../common/generated-types';
+import {GET_ACTIVE_CUSTOMER} from '../../../common/graphql/documents.graphql';
+import {DataService} from '../../../core/providers/data/data.service';
+import {StateService} from '../../../core/providers/state/state.service';
 
 @Component({
     selector: 'vsf-account-link',
@@ -26,13 +26,15 @@ import { StateService } from '../../../core/providers/state/state.service';
 export class AccountLinkComponent implements OnInit {
 
     activeCustomer$: Observable<GetActiveCustomerQuery['activeCustomer']>;
+
     constructor(private dataService: DataService,
-                private stateService: StateService) {}
+                private stateService: StateService) {
+    }
 
     ngOnInit() {
-        const getActiveCustomer$ = this.dataService.query<GetActiveCustomerQuery>(GET_ACTIVE_CUSTOMER, {}, 'network-only');
-
-        getActiveCustomer$.pipe(take(1)).subscribe(data => {
+        const getActiveCustomer$ = this.dataService.query<GetActiveCustomerQuery>(GET_ACTIVE_CUSTOMER, {});
+        getActiveCustomer$.pipe(
+            take(1)).subscribe(data => {
             if (data.activeCustomer) {
                 this.stateService.setState('signedIn', true);
             }
@@ -45,7 +47,7 @@ export class AccountLinkComponent implements OnInit {
     }
 
     userName(customer: NonNullable<GetActiveCustomerQuery['activeCustomer']>): string {
-        const { firstName, lastName, emailAddress } = customer;
+        const {firstName, lastName, emailAddress} = customer;
         if (firstName && lastName) {
             return `${firstName} ${lastName}`;
         } else {

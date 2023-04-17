@@ -24,7 +24,7 @@ export class AccountDashboardComponent implements OnInit {
                 private router: Router) { }
 
     ngOnInit() {
-        this.activeCustomer$ = this.dataService.query<GetAccountOverviewQuery>(GET_ACCOUNT_OVERVIEW).pipe(
+        this.activeCustomer$ = this.dataService.query<GetAccountOverviewQuery>(GET_ACCOUNT_OVERVIEW, {}, 'cache-only').pipe(
             map(data => data.activeCustomer),
             filter(notNullOrUndefined),
         );

@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, Optional} from '@angular/core';
 import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
-import {GetCollectionsQuery, GetCollectionsQueryVariables} from './common/generated-types';
-import {GET_COLLECTIONS} from './common/graphql/documents.graphql';
+import {map, take} from 'rxjs/operators';
+import {SERVER_BEARER_TOKEN} from './app.module';
+import {GetActiveCustomerQuery, GetCollectionsQuery, GetCollectionsQueryVariables} from './common/generated-types';
+import {GET_ACTIVE_CUSTOMER, GET_COLLECTIONS} from './common/graphql/documents.graphql';
 import {DataService} from './core/providers/data/data.service';
 
 import {StateService} from './core/providers/state/state.service';
@@ -34,7 +35,9 @@ export class AppComponent implements OnInit {
 
     constructor(
         private stateService: StateService,
-        private dataService: DataService) {
+        private dataService: DataService,
+        @Optional() @Inject(SERVER_BEARER_TOKEN) private serverBearerToken: string | undefined
+    ) {
     }
 
     ngOnInit(): void {
@@ -44,7 +47,18 @@ export class AppComponent implements OnInit {
             map(({collections}) => collections.items.filter(c => c.parent?.name === '__root_collection__'))
         );
 
-        this.stateService.select(s => s.activeOrderId).subscribe(x => console.log(x))
+
+        this.stateService.select(s => s.signedIn).subscribe(x => console.log('STATE: signed in: ', x));
+
+        if (this.serverBearerToken) {
+            const getActiveCustomer$ = this.dataService.query<GetActiveCustomerQuery>(GET_ACTIVE_CUSTOMER, {});
+            getActiveCustomer$.pipe(take(1)).subscribe(data => {
+                if (data.activeCustomer) {
+                    this.stateService.setState('signedIn', true);
+                }
+            });
+        }
+
     }
 
     openCartDrawer() {

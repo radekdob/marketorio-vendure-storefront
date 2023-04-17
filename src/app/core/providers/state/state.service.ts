@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { distinctUntilChanged, map } from 'rxjs/operators';
+import {Injectable} from '@angular/core';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {distinctUntilChanged, map} from 'rxjs/operators';
 
 export interface AppState {
     signedIn: boolean;
@@ -47,4 +47,14 @@ export class StateService {
             distinctUntilChanged(),
         );
     }
+
+    getState(): AppState {
+        return {...this.stateSubject.value};
+    }
+
+    restoreState(state: AppState): void {
+        this.state = state;
+        this.stateSubject.next(this.state);
+    }
+
 }

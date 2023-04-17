@@ -9,6 +9,7 @@ import {APOLLO_OPTIONS, ApolloModule} from 'apollo-angular';
 import {HttpLink} from 'apollo-angular/http';
 import {environment} from '../../environments/environment';
 import possibleTypesData from '../common/introspection-results';
+import {extractBearerFromCookie} from '../common/utils/extract-bearer-from-cookie';
 import {buildIconLibrary} from './icon-library';
 import {DefaultInterceptor} from './providers/data/interceptor';
 
@@ -90,7 +91,9 @@ export function apolloOptionsFactory(httpLink: HttpLink, platformId: any) {
             setContext(() => {
                 if (!isServer) {
                     if (environment.tokenMethod === 'bearer') {
-                        const authToken = localStorage.getItem('authToken');
+                        const cookies = document.cookie;
+                        const tokenCookieName = environment.tokenCookieName;
+                        const authToken = extractBearerFromCookie(cookies || '', tokenCookieName);
                         if (authToken) {
                             return {
                                 headers: {

@@ -1,11 +1,12 @@
 import {DOCUMENT} from '@angular/common';
-import {Inject, NgModule} from '@angular/core';
+import {Inject, InjectionToken, NgModule} from '@angular/core';
 import {BrowserModule, BrowserTransferStateModule, makeStateKey, TransferState} from '@angular/platform-browser';
 import {NavigationEnd, Router, RouterModule, UrlSerializer} from '@angular/router';
 import {filter} from 'rxjs/operators';
 
 import {AppComponent} from './app.component';
 import {routes} from './app.routes';
+import {StateService} from './core/providers/state/state.service';
 import {AccountLinkComponent} from './shared/components/account-link/account-link.component';
 import {CartDrawerComponent} from './shared/components/cart-drawer/cart-drawer.component';
 import {CartToggleComponent} from './shared/components/cart-toggle/cart-toggle.component';
@@ -19,6 +20,11 @@ import {ProductSearchBarComponent} from './shared/components/product-search-bar/
 import {CoreModule} from './core/core.module';
 
 const STATE_KEY = makeStateKey<any>('apollo.state');
+
+const APP_STATE_KEY = makeStateKey<any>('app.state');
+
+export const SERVER_BEARER_TOKEN = new InjectionToken<string | undefined>('server-bearer-token');
+
 
 @NgModule({
     declarations: [
@@ -54,6 +60,7 @@ export class AppModule {
         private readonly transferState: TransferState,
         private router: Router,
         private urlSerializer: UrlSerializer,
+        private stateService: StateService,
         @Inject(DOCUMENT) private document?: Document,
     ) {
         const isBrowser = this.transferState.hasKey<any>(STATE_KEY);
@@ -71,11 +78,23 @@ export class AppModule {
             const state = this.coreModule.extractState();
             return state;
         });
+
+        this.transferState.onSerialize(APP_STATE_KEY, () => {
+            const state = this.stateService.getState();
+            return state;
+        });
     }
 
     onBrowser() {
+
+        const state2 = this.transferState.get<any>(APP_STATE_KEY, null);
+        this.stateService.restoreState(state2);
+        console.log('APP RESTORED SIGNED IN: ', this.stateService.getState().signedIn)
+
         const state = this.transferState.get<any>(STATE_KEY, null);
+        console.log('STATE APOLLO RESTORED: ', state);
         this.coreModule.restoreState(state);
+
     }
 
     /**

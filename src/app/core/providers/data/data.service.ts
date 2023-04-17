@@ -1,26 +1,33 @@
-import { Injectable } from '@angular/core';
+import {Inject, Injectable, Optional} from '@angular/core';
 import {NetworkStatus, OperationVariables, WatchQueryFetchPolicy} from '@apollo/client/core';
-import { Apollo } from 'apollo-angular';
-import { DocumentNode } from 'graphql';
-import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import {Apollo} from 'apollo-angular';
+import {DocumentNode} from 'graphql';
+import {Observable} from 'rxjs';
+import {filter, map} from 'rxjs/operators';
+import {SERVER_BEARER_TOKEN} from '../../../app.module';
 
 @Injectable({
     providedIn: 'root',
 })
 export class DataService {
 
-    private readonly context =  {
+    private readonly context: any = {
         headers: {},
     };
 
-    constructor(private apollo: Apollo) { }
+    constructor(private apollo: Apollo,
+                @Optional() @Inject(SERVER_BEARER_TOKEN) private serverBearerToken: string | undefined) {
+        if (serverBearerToken) {
+            this.context.headers['Authorization'] = `Bearer ${serverBearerToken}`;
+        }
+    }
 
-    query<T = any, V extends OperationVariables = any>(query: DocumentNode, variables?: V, fetchPolicy?: WatchQueryFetchPolicy): Observable<T> {
+
+    query<T = any, V extends OperationVariables = any>(query: DocumentNode, variables?: V, fetchPolicy?: WatchQueryFetchPolicy, customContext?: any): Observable<T> {
         return this.apollo.watchQuery<T, V>({
             query,
             variables,
-            context: this.context,
+            context: customContext ?? this.context,
             fetchPolicy: fetchPolicy || 'cache-first',
         }).valueChanges.pipe(
             filter(result => result.networkStatus === NetworkStatus.ready),

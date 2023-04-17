@@ -1,11 +1,16 @@
-import { APP_BASE_HREF } from '@angular/common';
-import { ngExpressEngine } from '@nguniversal/express-engine';
+import {APP_BASE_HREF} from '@angular/common';
+import {InjectionToken} from '@angular/core';
+import {ngExpressEngine} from '@nguniversal/express-engine';
 import * as express from 'express';
-import { existsSync } from 'fs';
-import { join } from 'path';
+import {existsSync} from 'fs';
+import {join} from 'path';
 import 'zone.js/node';
+import {SERVER_BEARER_TOKEN} from './src/app/app.module';
+import {extractBearerFromCookie} from './src/app/common/utils/extract-bearer-from-cookie';
+import {environment} from './src/environments/environment';
 
-import { AppServerModule } from './src/main.server';
+import {AppServerModule} from './src/main.server';
+
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app() {
@@ -31,7 +36,21 @@ export function app() {
 
     // All regular routes use the Universal engine
     server.get('*', (req, res) => {
-        res.render(indexHtml, {req, providers: [{provide: APP_BASE_HREF, useValue: req.baseUrl}]});
+
+        const cookies = req.get('cookie');
+        const tokenCookieName = environment.tokenCookieName;
+        let bearerToken: string | undefined;
+        try {
+            bearerToken = extractBearerFromCookie(cookies || '', tokenCookieName);
+        } catch (e) {
+            console.warn('Malformed token in cookie')
+        }
+        res.render(indexHtml, {
+            req, providers: [
+                {provide: APP_BASE_HREF, useValue: req.baseUrl},
+                {provide: SERVER_BEARER_TOKEN, useValue: bearerToken}
+            ]
+        });
     });
 
     return server;
