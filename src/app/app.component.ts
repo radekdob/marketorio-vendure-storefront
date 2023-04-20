@@ -47,9 +47,6 @@ export class AppComponent implements OnInit {
             map(({collections}) => collections.items.filter(c => c.parent?.name === '__root_collection__'))
         );
 
-
-        this.stateService.select(s => s.signedIn).subscribe(x => console.log('STATE: signed in: ', x));
-
         if (this.serverBearerToken) {
             const getActiveCustomer$ = this.dataService.query<GetActiveCustomerQuery>(GET_ACTIVE_CUSTOMER, {});
             getActiveCustomer$.pipe(take(1)).subscribe(data => {

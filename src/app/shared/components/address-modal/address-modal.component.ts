@@ -1,7 +1,7 @@
 import {AsyncPipe} from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import {first, map} from 'rxjs/operators';
 
 import {
     AddressFragment,
@@ -42,6 +42,7 @@ export class AddressModalComponent implements Dialog<AddressFragment>, OnInit {
     ngOnInit() {
         this.availableCountries$ = this.dataService.query<GetAvailableCountriesQuery>(GET_AVAILABLE_COUNTRIES).pipe(
             map(data => data.availableCountries),
+            first()
         );
     }
 

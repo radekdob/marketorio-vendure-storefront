@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {Observable} from 'rxjs';
+import {EMPTY, Observable} from 'rxjs';
 import {map, switchMap} from 'rxjs/operators';
 
 import {GetCustomerAddressesQuery} from '../../../common/generated-types';
@@ -36,7 +36,14 @@ export class AccountAddressBookComponent implements OnInit {
             },
             closable: true,
         }).pipe(
-            switchMap(() => this.dataService.query<GetCustomerAddressesQuery>(GET_CUSTOMER_ADDRESSES, null, 'network-only')),
+            switchMap((data) => {
+                    if (data) {
+                        return this.dataService.query<GetCustomerAddressesQuery>(GET_CUSTOMER_ADDRESSES, null, 'network-only')
+                    } else {
+                        return EMPTY;
+                    }
+                }
+            ),
         )
             .subscribe();
     }

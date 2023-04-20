@@ -19,7 +19,7 @@ import {MobileMenuToggleComponent} from './shared/components/mobile-menu-toggle/
 import {ProductSearchBarComponent} from './shared/components/product-search-bar/product-search-bar.component';
 import {CoreModule} from './core/core.module';
 
-const STATE_KEY = makeStateKey<any>('apollo.state');
+const APOLLO_STATE_KEY = makeStateKey<any>('apollo.state');
 
 const APP_STATE_KEY = makeStateKey<any>('app.state');
 
@@ -63,7 +63,7 @@ export class AppModule {
         private stateService: StateService,
         @Inject(DOCUMENT) private document?: Document,
     ) {
-        const isBrowser = this.transferState.hasKey<any>(STATE_KEY);
+        const isBrowser = this.transferState.hasKey<any>(APOLLO_STATE_KEY);
 
         if (isBrowser) {
             this.onBrowser();
@@ -74,7 +74,7 @@ export class AppModule {
     }
 
     onServer() {
-        this.transferState.onSerialize(STATE_KEY, () => {
+        this.transferState.onSerialize(APOLLO_STATE_KEY, () => {
             const state = this.coreModule.extractState();
             return state;
         });
@@ -87,13 +87,11 @@ export class AppModule {
 
     onBrowser() {
 
-        const state2 = this.transferState.get<any>(APP_STATE_KEY, null);
-        this.stateService.restoreState(state2);
-        console.log('APP RESTORED SIGNED IN: ', this.stateService.getState().signedIn)
+        const appState = this.transferState.get<any>(APP_STATE_KEY, null);
+        this.stateService.restoreState(appState);
 
-        const state = this.transferState.get<any>(STATE_KEY, null);
-        console.log('STATE APOLLO RESTORED: ', state);
-        this.coreModule.restoreState(state);
+        const apolloState = this.transferState.get<any>(APOLLO_STATE_KEY, null);
+        this.coreModule.restoreState(apolloState);
 
     }
 

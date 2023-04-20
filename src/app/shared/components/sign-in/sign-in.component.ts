@@ -1,13 +1,14 @@
 import {NgIf} from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {Router, RouterLink} from '@angular/router';
 
-import { SignInMutation, SignInMutationVariables } from '../../../common/generated-types';
-import { DataService } from '../../../core/providers/data/data.service';
-import { StateService } from '../../../core/providers/state/state.service';
+import {SignInMutation, SignInMutationVariables} from '../../../common/generated-types';
+import {GET_ACTIVE_CUSTOMER} from '../../../common/graphql/documents.graphql';
+import {DataService} from '../../../core/providers/data/data.service';
+import {StateService} from '../../../core/providers/state/state.service';
 
-import { SIGN_IN } from './sign-in.graphql';
+import {SIGN_IN} from './sign-in.graphql';
 
 @Component({
     selector: 'vsf-sign-in',
@@ -33,14 +34,19 @@ export class SignInComponent {
     constructor(private dataService: DataService,
                 private stateService: StateService,
                 private router: Router,
-                private changeDetector: ChangeDetectorRef) {}
+                private changeDetector: ChangeDetectorRef) {
+    }
 
     signIn() {
         this.dataService.mutate<SignInMutation, SignInMutationVariables>(SIGN_IN, {
-            emailAddress: this.emailAddress,
-            password: this.password,
-            rememberMe: this.rememberMe,
-        }).subscribe({
+                emailAddress: this.emailAddress,
+                password: this.password,
+                rememberMe: this.rememberMe,
+            },
+            [
+                {query: GET_ACTIVE_CUSTOMER}
+            ],
+        ).subscribe({
             next: ({login}) => {
                 switch (login.__typename) {
                     case 'CurrentUser':

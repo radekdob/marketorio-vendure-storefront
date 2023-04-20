@@ -1,12 +1,13 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {Router} from '@angular/router';
+import {Observable} from 'rxjs';
 
-import { SignOutMutation } from '../../../common/generated-types';
-import { DataService } from '../../../core/providers/data/data.service';
-import { StateService } from '../../../core/providers/state/state.service';
+import {SignOutMutation} from '../../../common/generated-types';
+import {GET_ACTIVE_CUSTOMER} from '../../../common/graphql/documents.graphql';
+import {DataService} from '../../../core/providers/data/data.service';
+import {StateService} from '../../../core/providers/state/state.service';
 
-import { SIGN_OUT } from './account.graphql';
+import {SIGN_OUT} from './account.graphql';
 
 @Component({
     selector: 'vsf-account',
@@ -25,7 +26,11 @@ export class AccountComponent {
     }
 
     signOut() {
-        this.dataService.mutate<SignOutMutation>(SIGN_OUT).subscribe({
+        this.dataService.mutate<SignOutMutation>(SIGN_OUT, {},
+            [
+                {query: GET_ACTIVE_CUSTOMER}
+            ]
+        ).subscribe({
             next: () => {
                 this.stateService.setState('signedIn', false);
                 this.router.navigate(['/']);

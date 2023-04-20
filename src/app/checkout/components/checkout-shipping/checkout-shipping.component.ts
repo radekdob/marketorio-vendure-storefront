@@ -26,7 +26,6 @@ import {ModalService} from '../../../core/providers/modal/modal.service';
 import {NotificationService} from '../../../core/providers/notification/notification.service';
 import {StateService} from '../../../core/providers/state/state.service';
 import {AddressFormComponent} from '../../../shared/components/address-form/address-form.component';
-import {AddressModalComponent} from '../../../shared/components/address-modal/address-modal.component';
 
 import {
     GET_ELIGIBLE_SHIPPING_METHODS,
@@ -119,18 +118,6 @@ export class CheckoutShippingComponent implements OnInit, OnDestroy {
             address.postalCode,
             address.country.name,
         ].filter(notNullOrUndefined);
-    }
-
-    createAddress() {
- /*       this.modalService.fromComponent(AddressModalComponent, {
-            locals: {
-                title: 'Create new address',
-            },
-            closable: true,
-        }).pipe(
-            switchMap(() => this.dataService.query<GetCustomerAddressesQuery>(GET_CUSTOMER_ADDRESSES, null, 'network-only')),
-        )
-            .subscribe();*/
     }
 
     editAddress(address: AddressFragment) {
