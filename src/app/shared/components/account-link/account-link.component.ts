@@ -3,7 +3,7 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {RouterLink} from '@angular/router';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {Observable} from 'rxjs';
-import {map, switchMap, tap} from 'rxjs/operators';
+import {map, switchMap} from 'rxjs/operators';
 
 import {GetActiveCustomerQuery} from '../../../common/generated-types';
 import {GET_ACTIVE_CUSTOMER} from '../../../common/graphql/documents.graphql';
@@ -33,19 +33,9 @@ export class AccountLinkComponent implements OnInit {
 
     ngOnInit() {
         const getActiveCustomer$ = this.dataService.query<GetActiveCustomerQuery>(GET_ACTIVE_CUSTOMER, {});
-     /*   getActiveCustomer$.subscribe(data => {
-            console.log('2: ', data);
-            if (data.activeCustomer) {
-                this.stateService.setState('signedIn', true);
-            }
-        });*/
-
         this.activeCustomer$ = this.stateService.select(state => state.signedIn).pipe(
-            tap(x => console.log('1: ', x)),
             switchMap(() => getActiveCustomer$),
             map(data => data && data.activeCustomer),
-            tap(x => console.log('3: ', x)),
-
         );
     }
 

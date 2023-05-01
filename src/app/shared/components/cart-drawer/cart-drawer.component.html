@@ -20,9 +20,15 @@
                                 </button>
                             </div>
                             <div *ngIf="!(isEmpty$ | async); else empty" class="mt-8 px-4 overflow-y-auto">
-                                <vsf-cart-contents [cart]="cart$ | async"
-                                                   [canAdjustQuantities]="true"
-                                                   (setQuantity)="setQuantity($event)"></vsf-cart-contents>
+                                <ng-container *ngIf="cart$ | async as cart">
+                                    <vsf-order-change-to-status
+                                        *ngIf="cart.state !== addingItemsOrderState"
+                                    ></vsf-order-change-to-status>
+
+                                    <vsf-cart-contents [cart]="cart"
+                                                       [canAdjustQuantities]="cart.state === addingItemsOrderState"
+                                                       (setQuantity)="setQuantity($event)"></vsf-cart-contents>
+                                </ng-container>
 
                             </div>
 

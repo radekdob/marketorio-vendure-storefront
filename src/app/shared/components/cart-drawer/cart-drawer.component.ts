@@ -18,6 +18,7 @@ import {ActiveService} from '../../../core/providers/active/active.service';
 import {DataService} from '../../../core/providers/data/data.service';
 import {NotificationService} from '../../../core/providers/notification/notification.service';
 import {StateService} from '../../../core/providers/state/state.service';
+import {OrderChangeToStatusComponent} from '../order-change-to-status/order-change-to-status.component';
 
 import {ADJUST_ITEM_QUANTITY, REMOVE_ITEM_FROM_CART} from './cart-drawer.graphql';
 
@@ -34,7 +35,8 @@ import {ADJUST_ITEM_QUANTITY, REMOVE_ITEM_FROM_CART} from './cart-drawer.graphql
         CartContentsComponent,
         FormatPricePipe,
         RouterLink,
-        NgIf
+        NgIf,
+        OrderChangeToStatusComponent
     ]
 })
 export class CartDrawerComponent implements OnInit {
@@ -44,6 +46,8 @@ export class CartDrawerComponent implements OnInit {
 
     cart$: Observable<GetActiveOrderQuery['activeOrder']>;
     isEmpty$: Observable<boolean>;
+
+    readonly addingItemsOrderState: string = 'AddingItems';
 
     constructor(private dataService: DataService,
                 private stateService: StateService,

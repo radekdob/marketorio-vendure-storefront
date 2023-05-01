@@ -1,4 +1,5 @@
 @import "@angular/cdk/overlay-prebuilt";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -18,4 +19,9 @@ fa-icon svg {
     font-size: inherit;
     height: 1em;
     vertical-align: -0.125em;
+}
+
+
+.link {
+    @apply cursor-pointer font-medium text-blue-600 dark:text-blue-500 hover:underline;
 }

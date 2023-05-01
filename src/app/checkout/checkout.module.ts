@@ -9,6 +9,7 @@ import {AddressCardComponent} from '../shared/components/address-card/address-ca
 import {AddressFormComponent} from '../shared/components/address-form/address-form.component';
 import {CartContentsComponent} from '../shared/components/cart-contents/cart-contents.component';
 import {CartTotalsComponent} from '../shared/components/cart-totals/cart-totals.component';
+import {OrderChangeToStatusComponent} from '../shared/components/order-change-to-status/order-change-to-status.component';
 import {RadioCardFieldsetComponent} from '../shared/components/radio-card/radio-card-fieldset.component';
 import {RadioCardComponent} from '../shared/components/radio-card/radio-card.component';
 import {SignInComponent} from '../shared/components/sign-in/sign-in.component';
@@ -53,6 +54,7 @@ const DECLARATIONS = [
         CartContentsComponent,
         CartTotalsComponent,
         AddressCardComponent,
+        OrderChangeToStatusComponent,
     ],
 })
 export class CheckoutModule {

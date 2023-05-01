@@ -1,0 +1,9 @@
+<div class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
+    <ng-container *ngIf="showLinkToCheckout">
+        Go to <a class="link" [routerLink]="'/checkout'">checkout</a> and complete your payment.<br/>
+    </ng-container>
+    If you want to modify your cart
+    <span class="link"
+          (click)="changeOrderState()"
+    >click here</span>.
+</div>
